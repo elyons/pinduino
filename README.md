@@ -1,5 +1,21 @@
-#Functions for controlling 5V Addressable RGB strips
+# Welcome
 
+The pinduino library is used to control LEDs (and other mods) on pinball machines using an arduino-based board called the Pinduino.  
+
+# Additional Documents
+* [Instructions on Google docs for everything -- programming, building, installing, etc] (https://drive.google.com/drive/u/0/folders/0B2njOnd06CCOdlBCVzdiWFZhUVE)
+* [Pinduino sketches for various games] (https://github.com/elyons/professor_pinball_pinduino_sketches)
+* [Board files for the Pinduino] (https://github.com/elyons/professor_pinball_pinduino_sketches/tree/master/board_files)
+
+# Videos
+* Ironman LED ramps gameplay
+* [![Ironman interactive LED ramps](http://img.youtube.com/vi/QuvIWuW5m-Q/0.jpg)](http://www.youtube.com/watch?v=QuvIWuW5m-Q)
+* Tron LED ramps gameplay
+* [![Tron interactive LED ramps](http://img.youtube.com/vi/9_uMrDvA8-M/0.jpg)](http://www.youtube.com/watch?v=9_uMrDvA8-M)
+* Theatre of Magic LED ramps gameplay
+* [![Threatre of Magic](http://img.youtube.com/vi/NrWb4Kh-suk/0.jpg)](https://www.youtube.com/watch?v=NrWb4Kh-suk)
+
+#Functions for controlling 5V Addressable RGB strips
 
 These functions are accessed using the addressable LED object (adrLED)
 Normally called:
