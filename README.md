@@ -1,32 +1,24 @@
-
-
-
-
-Functions for controlling 5V Addressable RGB strips
+#Functions for controlling 5V Addressable RGB strips
 
 
 These functions are accessed using the addressable LED object (adrLED)
 Normally called:
-pd.adrLED1()->function_name(parameters); 
+`pd.adrLED1()->function_name(parameters);`
 
 
 Many functions take in color parameters.  Color parameters can be specified in two way:
-RGB (red, green, blue) values
-By color name.  Valid color names are (case insensitive):  
-red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
+* RGB (red, green, blue) values
+* By color name.  
+**Valid color names are (case insensitive):  red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
 
 
 There are usually two types of each function.  One for using RGB values and one for using color names.
 
-
 Time:  Time is in milliseconds, so time = 1000 means 1 second
-
 
 Direction (dir):  direction of effect.  1 is from input to end (of LED strip); -1 is end to input     
 
-
-
-
+```arduino
 // Clear the strip of all colors
 void clear();
 Example: pd.adrLED1()->clear();
@@ -127,3 +119,4 @@ Example: pd.adrLED1()->explosion(255, 0, 0, 5);
 void explosion(int pos, String color, int span);
 Example: pd.adrLED1()->explosion(20, "red", 5);
 Means:  Do explosion effect for LED strip 1 at position 10th LED, color red, span (size of explosion) 5 LEDs
+```
