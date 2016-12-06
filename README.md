@@ -15,6 +15,89 @@ The pinduino library is used to control LEDs (and other mods) on pinball machine
 * Theatre of Magic LED ramps gameplay
 * [![Threatre of Magic](http://img.youtube.com/vi/NrWb4Kh-suk/0.jpg)](https://www.youtube.com/watch?v=NrWb4Kh-suk)
 
+#General framework
+```arduino
+#include <pinduino.h>
+
+//There are two version of the pinduino:
+// v0.2 which uses an arduino Mega, controls 3 addressable LED strips and 4 12V RGB LED strips, 
+//   and adapts to many pinball power driver boards by the use of wiring harnesses
+// v0.3 which uses an arduino Nano, controls 2 addressable LED strips, and has configurations for
+//   WPC, Stern SAM, and Stern Whitestar power driver boards
+
+//Initialize the number of addressable LEDs for outputs
+int aLEDNum1 = 50;
+int aLEDNum2 = 50;
+int aLEDNum3 = 0;
+
+//initialize the pinduino object, specify "Mega" or "Nano" for the arduino
+pinduino pd (aLEDNum1, aLEDNum2, aLEDNum3, "Nano");
+
+//This is for the background attact mode when the game is not being played
+int bg_chase_on = 0;
+
+unsigned long timeLastEvent = 0; // time last event was last triggered
+
+int startChaseWaitTime = 20000; //Amount of time to wait before chase lights start up again 1000 == 1 second
+
+void setup() {
+  Serial.begin(115200); // if you want to monitor what the pinduino is sensing from the game
+  pd.adrLED1()->clear();
+  pd.adrLED2()->clear();
+  pd.adrLED3()->clear();
+  pd.pinState()->reset();
+}
+
+void loop(){
+  for (int i = 0; i < 500; i = i + 1) { //check pinstates for a while
+    pd.pinState()->update(); // checks and records pinball machine activity (flashers, magnets, motors, coils, etc)
+  }
+
+//   Print the pin states out to serial 
+//  pd.pinState()->print(); // uncomment if you want to print out the states of the pinball machine
+
+  checkPinStates(); // checks to see if there has been activity on a pinball circuit and then runs a lighting effect
+
+  //if there hasn't been activity for a while, assume game is in attract mode
+  if (millis()-timeLastEvent > startChaseWaitTime) {bg_chase_on=1;}
+
+  //run attract function
+  if (bg_chase_on){backgroundChase();}
+}
+
+void checkPinStates(){
+  int trigger =0; //this flag is set to one if anything lighting effect was triggered.
+  
+  //check to see if anything happened on pin 1 of J126 (WPC)
+  if ( pd.pinState()->J126(1) ){
+    pd.adrLED1()->color("blue",255);
+    delay(500);
+    trigger=1;
+  }
+  
+//...repeat for other pins//
+
+ // there was an event, reset things
+ if (trigger) {
+   pd.adrLED1()->clear();
+   pd.adrLED2()->clear();
+   pd.pinState()->reset();
+   trigger =0;
+   bg_chase_on = 0;
+   timeLastEvent = millis();
+  }
+//end function checkPinStates
+}
+
+//attract mode 
+void backgroundChase() {
+  pd.adrLED1()->clear();
+  pd.adrLED1()->color("white",255);
+  pd.adrLED2()->color("white",0);
+  // .... do stuff .... ///
+}
+```
+
 #Functions for controlling 5V Addressable RGB strips
 
 These functions are accessed using the addressable LED object (adrLED)
