@@ -10,7 +10,7 @@ Normally called:
 Many functions take in color parameters.  Color parameters can be specified in two way:
 * RGB (red, green, blue) values
 * By color name.  
-** Valid color names are (case insensitive):  red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
+ * Valid color names are (case insensitive):  red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
 
 
 There are usually two types of each function.  One for using RGB values and one for using color names.
