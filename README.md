@@ -8,12 +8,12 @@ The pinduino library is used to control LEDs (and other mods) on pinball machine
 * [Board files for the Pinduino] (https://github.com/elyons/professor_pinball_pinduino_sketches/tree/master/board_files)
 
 # Videos
-* Ironman LED ramps gameplay
-* [![Ironman interactive LED ramps](http://img.youtube.com/vi/QuvIWuW5m-Q/0.jpg)](http://www.youtube.com/watch?v=QuvIWuW5m-Q)
-* Tron LED ramps gameplay
-* [![Tron interactive LED ramps](http://img.youtube.com/vi/9_uMrDvA8-M/0.jpg)](http://www.youtube.com/watch?v=9_uMrDvA8-M)
-* Theatre of Magic LED ramps gameplay
-* [![Threatre of Magic](http://img.youtube.com/vi/NrWb4Kh-suk/0.jpg)](https://www.youtube.com/watch?v=NrWb4Kh-suk)
+## Ironman LED ramps gameplay
+[![Ironman interactive LED ramps](http://img.youtube.com/vi/QuvIWuW5m-Q/0.jpg)](http://www.youtube.com/watch?v=QuvIWuW5m-Q)
+## Tron LED ramps gameplay
+[![Tron interactive LED ramps](http://img.youtube.com/vi/9_uMrDvA8-M/0.jpg)](http://www.youtube.com/watch?v=9_uMrDvA8-M)
+## Theatre of Magic LED ramps gameplay
+[![Threatre of Magic](http://img.youtube.com/vi/NrWb4Kh-suk/0.jpg)](https://www.youtube.com/watch?v=NrWb4Kh-suk)
 
 #General framework
 ```arduino
