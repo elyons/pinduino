@@ -744,42 +744,42 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
     if (r1 >255 ) {r1=255;}
     if (g1 >255 ) {g1=255;}
     if (b1 >255 ) {b1=255;}
-	if (dir >= 0) 
-		{  
-		if (pos+i > -121) 
-			{
-			if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
-			if ((pos+i+30 >= 0) && (pos+i+30 < numP)){_strip->setPixelColor(pos+i+30, r1, g1, b1);}
-			if ((pos+i+60 >= 0) && (pos+i+60 < numP)){_strip->setPixelColor(pos+i+60, r1, g1, b1);}
-			if ((pos+i+90 >= 0) && (pos+i+90 < numP)){_strip->setPixelColor(pos+i+90, r1, g1, b1);}
-			if ((pos+i+120 >= 0) && (pos+i+120 < numP)){_strip->setPixelColor(pos+i+120, r1, g1, b1);}
+	  if (dir >= 0) 
+		 {  
+		  if (pos+i > -121) 
+			 {
+			  if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
+//			if ((pos+i+30 >= 0) && (pos+i+30 < numP)){_strip->setPixelColor(pos+i+30, r1, g1, b1);}
+//			if ((pos+i+60 >= 0) && (pos+i+60 < numP)){_strip->setPixelColor(pos+i+60, r1, g1, b1);}
+//			if ((pos+i+90 >= 0) && (pos+i+90 < numP)){_strip->setPixelColor(pos+i+90, r1, g1, b1);}
+//			if ((pos+i+120 >= 0) && (pos+i+120 < numP)){_strip->setPixelColor(pos+i+120, r1, g1, b1);}
+			 }
+		  if (pos+i >=span)
+			 {
+			 _strip->setPixelColor(pos+i+1, 0,0,0);
+//			_strip->setPixelColor(pos+i+31, 0,0,0);
+//			_strip->setPixelColor(pos+i+61, 0,0,0);		
+//			_strip->setPixelColor(pos+i+91, 0,0,0);
+//			_strip->setPixelColor(pos+i+121, 0,0,0);				
+			} 
+		 }
+	  else
+		 {
+		  if (pos-i > -1) 
+			 {
+			  if ((pos-i >= 0) && (pos-i < numP)){_strip->setPixelColor(pos-i, r1, g1, b1);}
+//			if ((pos-i-30 >= 0) && (pos-i-30 < numP)){_strip->setPixelColor(pos-i-30, r1, g1, b1);}
+//			if ((pos-i-60 >= 0) && (pos-i-60 < numP)){_strip->setPixelColor(pos-i-60, r1, g1, b1);}
+//			if ((pos-i-90 >= 0) && (pos-i-90 < numP)){_strip->setPixelColor(pos-i-90, r1, g1, b1);}
+//			if ((pos-i-120 >= 0) && (pos-i-120 < numP)){_strip->setPixelColor(pos-i-120, r1, g1, b1);}
 			}
-		if (pos+i >=span)
+		 if (pos+i >=span)
 			{
-			_strip->setPixelColor(pos+i+1, 0,0,0);
-			_strip->setPixelColor(pos+i+31, 0,0,0);
-			_strip->setPixelColor(pos+i+61, 0,0,0);		
-			_strip->setPixelColor(pos+i+91, 0,0,0);
-			_strip->setPixelColor(pos+i+121, 0,0,0);				
-			}
-		}
-	else
-		{
-		if (pos-i > -1) 
-			{
-			if ((pos-i >= 0) && (pos-i < numP)){_strip->setPixelColor(pos-i, r1, g1, b1);}
-			if ((pos-i-30 >= 0) && (pos-i-30 < numP)){_strip->setPixelColor(pos-i-30, r1, g1, b1);}
-			if ((pos-i-60 >= 0) && (pos-i-60 < numP)){_strip->setPixelColor(pos-i-60, r1, g1, b1);}
-			if ((pos-i-90 >= 0) && (pos-i-90 < numP)){_strip->setPixelColor(pos-i-90, r1, g1, b1);}
-			if ((pos-i-120 >= 0) && (pos-i-120 < numP)){_strip->setPixelColor(pos-i-120, r1, g1, b1);}
-			}
-		if (pos+i >=span)
-			{
-			_strip->setPixelColor(pos-i-1, 0,0,0);
-			_strip->setPixelColor(pos-i-31, 0,0,0);
-			_strip->setPixelColor(pos-i-61, 0,0,0);		
-			_strip->setPixelColor(pos+i-91, 0,0,0);
-			_strip->setPixelColor(pos+i-121, 0,0,0);			
+			 _strip->setPixelColor(pos-i-1, 0,0,0);
+//			_strip->setPixelColor(pos-i-31, 0,0,0);
+//			_strip->setPixelColor(pos-i-61, 0,0,0);		
+//			_strip->setPixelColor(pos+i-91, 0,0,0);
+//			_strip->setPixelColor(pos+i-121, 0,0,0);			
 			}
 		}
 	
@@ -802,7 +802,7 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
   float bcs = abs(b1-b2)/(numP);
   if (b2 > b1){bcs=bcs*-1;}
   
-  for (int i = 0; i < numP+span*2+120; i++) {
+  for (int i = 0; i < numP+span; i++) {
 		_pinState->update();
     float r = r1;
     float g = g1;
