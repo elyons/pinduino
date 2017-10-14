@@ -46,6 +46,7 @@ class pinduinoPins
 		//		int _pinsNano[_numPins] = {A2,A3,A4,A5,A1,A0,13,12,5,4,3,2,9,8,7,6};
 		int _pinsNano[_numPins] = {A1,A0,13,12,A2,A3,A4,A5,5,4,3,2,9,8,7,6};
 		int _pinStates[_numPins];
+		void _initialize(); // set up input pins for read:  pinMode(pin, INPUT);
 };
 
 
