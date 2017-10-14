@@ -34,8 +34,10 @@ class AddressableStrip
     //color the entire strip some color
     //valid colors are (case insensitive):  red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
     void color(String color, int brightness);
+    void color(String color);
     //If you want to specify by R, G, B values between 0-255
     void colorRGB(int r, int g, int b, int brightness);
+    void colorRGB(int r, int g, int b);
 
     void clear();
     // fade in strip to given color by color name
