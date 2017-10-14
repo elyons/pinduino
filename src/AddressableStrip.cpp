@@ -132,6 +132,12 @@ void AddressableStrip::color2RGB(String color, int &r, int &g, int &b)
     g=0;
     b=255;
   }
+  else if (color.equalsIgnoreCase("black"))
+  {
+    r=0;
+    g=0;
+    b=0;
+  }
 }
 
 //set entire strip one color based on RGB values
