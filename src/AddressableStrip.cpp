@@ -136,8 +136,9 @@ void AddressableStrip::color2RGB(String color, int &r, int &g, int &b)
 
 //set entire strip one color based on RGB values
 void AddressableStrip::colorRGB(int r, int g, int b, int brightness) {
-  if (brightness < 1) {brightness = 1;}
-  if (brightness > 255) {brightness = 255;}
+  colorRGB(r,g,b);
+}
+void AddressableStrip::colorRGB(int r, int g, int b) {
   if (r<0) {r=0;}
   if (r>255) {r=255;}
   if (g<0) {g=0;}
@@ -147,24 +148,28 @@ void AddressableStrip::colorRGB(int r, int g, int b, int brightness) {
   for(int i=0; i<_numLEDs; i++) {
       _strip->setPixelColor(i, r, g, b);
   }
-  _strip->setBrightness(brightness);
   _strip->show();
 }
 
 //clear strip  turn off all colors
 void AddressableStrip::clear()
 {
-  colorRGB(0,0,0,1);
+  colorRGB(0,0,0);
 }
 
 //set entire strip one color based on names color
-void AddressableStrip::color(String color, int brightness)
+void AddressableStrip::color(String colorIn, int brightness)
+{
+	color(colorIn);
+}
+
+void AddressableStrip::color(String color)
 {
   int r = 0;
   int g = 0;
   int b = 0;
   color2RGB(color, r, g, b);
-  colorRGB(r, g, b, brightness); 
+  colorRGB(r, g, b); 
 }
 
 //fade in strip to a named color
@@ -181,7 +186,8 @@ void AddressableStrip::fadeIn(String color, float time)
 void AddressableStrip::fadeInRGB(int r, int g, int b, float time)
 {
   time = time/256;
-  colorRGB(r,g,b,1);
+	_strip->setBrightness(1);
+  colorRGB(r,g,b);
   if (time < 1) {time = 0;}
   for (int i = 1; i < 256; i++) {
 		_pinState->update();
@@ -189,7 +195,7 @@ void AddressableStrip::fadeInRGB(int r, int g, int b, float time)
     _strip->setBrightness(i);
     _strip->show();
   }
-  _strip->setBrightness(250);
+  _strip->setBrightness(255);
   _strip->show();
 }
 
@@ -197,7 +203,7 @@ void AddressableStrip::fadeInRGB(int r, int g, int b, float time)
 void AddressableStrip::fadeRGB2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float time)
 {
   time = time/256;
-  colorRGB(r1,g1,b1,250);
+  colorRGB(r1,g1,b1);
   if (time < 1) {time = 0;}
   //calcuate color changes
 	float rcs = abs(r1-r2)/256;
@@ -212,7 +218,7 @@ void AddressableStrip::fadeRGB2RGB(float r1, float g1, float b1, float r2, float
     float r = r1-(rcs*i);
     float g = g1-(gcs*i);
 	  float b = b1-(bcs*i);
-    colorRGB(r,g,b,250);
+    colorRGB(r,g,b);
 		_strip->show();
   }
 }
@@ -242,6 +248,7 @@ void AddressableStrip::fadeOut(float steps)
     _strip->show();
   }
   clear();
+	_strip->setBrightness(255);
 }
 
 //draw a band of width 2xspan on the LED strip at position pos of a given span with an RGB color.  Center of band is brightest and fades to either end
@@ -265,11 +272,11 @@ void AddressableStrip::RGBBand(int pos, int r, int g, int b, int span) {
     if (r1 >255 ) {r1=255;}
     if (g1 >255 ) {g1=255;}
     if (b1 >255 ) {b1=255;}
-	  
     if (pos+i > -1 && pos+i < _strip->numPixels()) {_strip->setPixelColor(pos+i, r1, g1, b1);}
     if (pos-i > -1 && pos+i < _strip->numPixels()) {_strip->setPixelColor(pos-i, r1, g1, b1);}
   }
-  _strip->setBrightness(255);
+//	int brightness = (r+g+b)/3;
+//  _strip->setBrightness(brightness);
   _strip->show();
 }
 
@@ -317,7 +324,7 @@ void AddressableStrip::RGBBandCont(int pos, int r, int g, int b, int span, int s
 		_strip->setPixelColor(pos-i, r1, g1, b1);
 		}
   }
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   _strip->show();
 }
 
@@ -547,7 +554,7 @@ void AddressableStrip::spreadInFromPoint2RGB (int pos, float r1, float g1, float
   //time between turning LEDs on 
   int expand_time = time/num_positions;
   
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   for(int i=0; i<num_positions; i++) {
 		_pinState->update();
     float r = r1;
@@ -658,7 +665,7 @@ void AddressableStrip::explosionRGB(int pos, int r, int g, int b, int span)
     if (pos+i > -1) {_strip->setPixelColor(pos+i, r1, g1, b1);}
     if (pos-i > -1) {_strip->setPixelColor(pos-i, r1, g1, b1);}
   }
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   _strip->show();
   fadeOut(50);
 }
@@ -674,7 +681,7 @@ void AddressableStrip::explosion (int pos, String color, int span)
 void AddressableStrip::rainbow(int wait) 
 {
   int i, j; 
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   for(j=0; j<256; j++) {
 		_pinState->update();
     for(i=0; i<_strip->numPixels(); i++) {
@@ -690,7 +697,7 @@ void AddressableStrip::rainbow(int wait)
 void AddressableStrip::rainbowCycle(int wait) 
 {
   int i, j; 
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   for(j=0; j<256; j++) { 
 		_pinState->update();
     for(i=0; i < _strip->numPixels(); i++) {
@@ -749,18 +756,10 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
 		  if (pos+i > -121) 
 			 {
 			  if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
-//			if ((pos+i+30 >= 0) && (pos+i+30 < numP)){_strip->setPixelColor(pos+i+30, r1, g1, b1);}
-//			if ((pos+i+60 >= 0) && (pos+i+60 < numP)){_strip->setPixelColor(pos+i+60, r1, g1, b1);}
-//			if ((pos+i+90 >= 0) && (pos+i+90 < numP)){_strip->setPixelColor(pos+i+90, r1, g1, b1);}
-//			if ((pos+i+120 >= 0) && (pos+i+120 < numP)){_strip->setPixelColor(pos+i+120, r1, g1, b1);}
 			 }
 		  if (pos+i >=span)
 			 {
 			 _strip->setPixelColor(pos+i+1, 0,0,0);
-//			_strip->setPixelColor(pos+i+31, 0,0,0);
-//			_strip->setPixelColor(pos+i+61, 0,0,0);		
-//			_strip->setPixelColor(pos+i+91, 0,0,0);
-//			_strip->setPixelColor(pos+i+121, 0,0,0);				
 			} 
 		 }
 	  else
@@ -768,23 +767,15 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
 		  if (pos-i > -1) 
 			 {
 			  if ((pos-i >= 0) && (pos-i < numP)){_strip->setPixelColor(pos-i, r1, g1, b1);}
-//			if ((pos-i-30 >= 0) && (pos-i-30 < numP)){_strip->setPixelColor(pos-i-30, r1, g1, b1);}
-//			if ((pos-i-60 >= 0) && (pos-i-60 < numP)){_strip->setPixelColor(pos-i-60, r1, g1, b1);}
-//			if ((pos-i-90 >= 0) && (pos-i-90 < numP)){_strip->setPixelColor(pos-i-90, r1, g1, b1);}
-//			if ((pos-i-120 >= 0) && (pos-i-120 < numP)){_strip->setPixelColor(pos-i-120, r1, g1, b1);}
 			}
 		 if (pos+i >=span)
 			{
 			 _strip->setPixelColor(pos-i-1, 0,0,0);
-//			_strip->setPixelColor(pos-i-31, 0,0,0);
-//			_strip->setPixelColor(pos-i-61, 0,0,0);		
-//			_strip->setPixelColor(pos+i-91, 0,0,0);
-//			_strip->setPixelColor(pos+i-121, 0,0,0);			
 			}
 		}
 	
   }
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   _strip->show();
 }
 
@@ -802,7 +793,7 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
   float bcs = abs(b1-b2)/(numP);
   if (b2 > b1){bcs=bcs*-1;}
   
-  for (int i = 0; i < numP+span; i++) {
+  for (int i = 0; i < numP+span*2; i++) {
 		_pinState->update();
     float r = r1;
     float g = g1;
@@ -823,6 +814,7 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
     if (dir > 0) {pos--;}
     else {pos++;}
   }
+  _strip->clear();
 }
 
 //bullet -- generate a band of light that moves from one end of the strip to the other using RGB color
@@ -946,9 +938,6 @@ void AddressableStrip::RGBMatrix(int rows, int r, int g, int b, int span, int di
 		}
 
   }
-  _strip->setBrightness(255);
+//  _strip->setBrightness(255);
   _strip->show();
 }
-/*
-TWS: Feb 15 2015 End Bullet Functions
-*/
