@@ -23,11 +23,13 @@
 pinduinoPins::pinduinoPins()
 {
 	arduinoType = "Mega";
+	_initialize();
 }
 
 pinduinoPins::pinduinoPins(String val)
 {
 	arduinoType = val;
+	_initialize();
 }
 
 
@@ -189,7 +191,6 @@ void pinduinoPins::resetJ9 (int pin)
         else if (pin == 13) {  resetPin(9);}
         else if (pin == 14) {  resetPin(10);}
         else if (pin == 15) {  resetPin(15);}
-        else return 0;
 }
 
 int pinduinoPins::numPins()
@@ -228,6 +229,22 @@ void pinduinoPins::update()
 		if (state == 1) 
 		{ //circuit being checked has been activated
 			_pinStates[i] = _pinStates[i] + 1;
+		}
+	}
+}
+
+void pinduinoPins::_initialize()
+{
+	int i;
+	for (i = 0; i < _numPins; i = i + 1)
+	{
+		if (arduinoType=="Mega")
+		{
+			pinMode(_pinsMega[i], INPUT);
+		}
+		else if (arduinoType=="Nano")
+		{
+			pinMode(_pinsNano[i], INPUT);
 		}
 	}
 }
