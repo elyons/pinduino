@@ -514,6 +514,12 @@ void AddressableStrip::chase2ColorCont(String color1, String color2, float span,
 	color2RGB(color2, r2, g2, b2);
   chase2RGBCont(r1, g1, b1, r2, g2, b2, span, time, dir, startLED, endLED);
 }
+
+void AddressableStrip::chaseColorCont(String color, float span, int time, int dir, int startLED, int endLED) {
+  int r, g, b;
+	color2RGB(color, r, g, b);
+	chase2RGBCont(r, g, b, r, g, b, span, time, dir, startLED, endLED);
+}
 //generate a band of light that move from one end of the strip to the other that starts at one named color and ends at another named color
 void AddressableStrip::chase2Color(String color1, String color2, float span, int time, int dir)
 {
@@ -966,7 +972,24 @@ void AddressableStrip::sparkle(String color, int speed) {
 void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
   for(int x=0; x<_numLEDs; x++) {
 		if (random(speed)==0) _strip->setPixelColor(x, r, g, b);
-		else _strip->setPixelColor(x,(_strip->getPixelColor(x)*0.88));
+		else {
+			uint32_t color = _strip->getPixelColor(x);
+			uint8_t red = ((color>>16) & 255)*0.88;
+			uint8_t green = ((color>>8) & 255)*0.88;
+			uint8_t blue = (color & 255)*0.88;
+			_strip->setPixelColor(x, red, green, blue);
+		}
+		//_strip->setPixelColor(x,(_strip->getPixelColor(x)*0.88));
 	}
 	_strip->show();
+}
+
+void AddressableStrip::marqeeRGB (int r, int g, int b, int span, int dist, int speed, int dir) {
+	//total length for a span and dist
+	int length = span + dist;
+	for (int x=0; x<_numLEDs; x++) {
+		if (x<=span) _strip->setPixelColor(x,r, g, b);
+    else _strip->setPixelColor(x,0,0,0);
+	}
+
 }
