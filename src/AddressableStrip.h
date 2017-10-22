@@ -120,7 +120,7 @@ class AddressableStrip
     void Matrix2Color(String color1, String color2, float span, int time, int dir);
 		void sparkle (String color, int speed);
 		void sparkleRGB (int r, int g, int b, int speed);
-		void marqeeRGB (int r, int g, int b, int span, int dist, int speed, int dir);
+		void marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir);
 
   private:
     int _pin; //data pin 
