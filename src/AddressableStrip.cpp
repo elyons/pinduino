@@ -984,7 +984,7 @@ void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
 	_strip->show();
 }
 
-void AddressableStrip::marqeeRGB (int r, int g, int b, int span, int dist, int speed, int dir) {
+void AddressableStrip::marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir) {
 	//total length for a span and dist
 	int length = span + dist;
 	for (int x=0; x<_numLEDs; x++) {
