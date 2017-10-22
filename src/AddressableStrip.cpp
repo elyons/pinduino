@@ -944,6 +944,29 @@ void AddressableStrip::RGBMatrix(int rows, int r, int g, int b, int span, int di
 		}
 
   }
-//  _strip->setBrightness(255);
   _strip->show();
+}
+
+void AddressableStrip::Matrix2Color(String color1, String color2, float span, int time, int dir) {
+	int r1,g1,b1;
+	int r2,g2,b2;
+	color2RGB(color1, r1, g1, b1);
+	color2RGB(color2, r2, g2, b2);
+	Matrix2RGB(r1, g1, b1, r2, g2, b2, span, time, dir);
+}
+
+void AddressableStrip::sparkle(String color, int speed) {
+	int r = 0;
+	int g = 0;
+	int b = 0;
+	color2RGB(color, r, g, b);
+	sparkleRGB(r, g, b, speed);
+}
+	
+void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
+  for(int x=0; x<_numLEDs; x++) {
+		if (random(speed)==0) _strip->setPixelColor(x, r, g, b);
+		else _strip->setPixelColor(x,(_strip->getPixelColor(x)*0.88));
+	}
+	_strip->show();
 }
