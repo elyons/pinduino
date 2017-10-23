@@ -620,7 +620,6 @@ void AddressableStrip::spreadOutFromPoint (int pos, float time) {
   for(int i=0; i<num_positions; i++) 
 	{
 		_pinState->update();
-    // Serial.println(i);
     _strip->setPixelColor(pos + i, 0, 0, 0);
     _strip->setPixelColor(pos - i, 0, 0, 0);
     _strip->show();
@@ -787,7 +786,44 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
 		}
 	
   }
-//  _strip->setBrightness(255);
+  _strip->show();
+}
+
+//RGBBullet -- draw a band of width 1xspan on the LED strip at position pos of a given span with an RGB color.  Front of band (at pos) is brightest and fades to end.
+void AddressableStrip::RGBBulletCont(int pos, int r, int g, int b, int span, int dir) {
+	int numP = _strip->numPixels();
+    if (r <0 ) {r=0;}
+    if (g <0 ) {g=0;}
+    if (b <0 ) {b=0;}
+    if (r >255 ) {r=255;}
+    if (g >255 ) {g=255;}
+    if (b >255 ) {b=255;}
+  double s = 100/span;
+	for (int i=0; i<=span; i++) {
+		if (dir>=0) _strip->setPixelColor(pos+i-1, 0, 0, 0);
+		else _strip->setPixelColor(pos-i+1, 0, 0, 0);
+	}
+  for(int i=0; i<=span; i++) {
+    double V = (i*s/100);
+    V = sqrt(V);
+    int r1 = r-V*r;
+    int g1 = g-V*g;
+    int b1 = b-V*b;
+    if (r1 <=0 ) {r1=0;}
+    if (g1 <=0 ) {g1=0;}
+    if (b1 <=0 ) {b1=0;}
+    if (r1 >255 ) {r1=255;}
+    if (g1 >255 ) {g1=255;}
+    if (b1 >255 ) {b1=255;}
+	  if (dir >= 0) {  
+			if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
+		}
+	 	else {
+		  if (pos-i > -1) {
+				_strip->setPixelColor(pos-i, r1, g1, b1);
+			}
+		}
+  }
   _strip->show();
 }
 
@@ -851,6 +887,69 @@ void AddressableStrip::bullet2Color(String color1, String color2, float span, in
   color2RGB(color1, r1, g1, b1);
   color2RGB(color2, r2, g2, b2);
   bullet2RGB(r1, g1, b1, r2, g2, b2, span, time, dir);
+}
+
+
+
+//multiBullet2RGB -- generate multiple bands of light that move from one end of the strip to the other that starts at one RGB color and ends at another RGB color
+void AddressableStrip::multiBullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir, int num) {
+  int pos;
+  int numP = _strip->numPixels();
+	int distance = numP/num; // distance between multiple bullets 
+  if (dir < 0) { pos=numP;} 
+  else  { pos=0;} 
+  //color step size
+  float rcs = abs(r1-r2)/(numP);
+  if (r2 > r1){rcs=rcs*-1;}
+  float gcs = abs(g1-g2)/(numP);
+  if (g2 > g1){gcs=gcs*-1;}
+  float bcs = abs(b1-b2)/(numP);
+  if (b2 > b1){bcs=bcs*-1;}
+  
+  for (int i = 0; i < distance*num; i++) {
+		_pinState->update();
+    float r = r1;
+    float g = g1;
+    float b = b1;
+    if (i > span) {
+      r = r1-(rcs*(i-span));
+      g = g1-(gcs*(i-span));
+      b = b1-(bcs*(i-span)); 
+    }
+		for (int j = 0; j < num; j++) {
+    	if (pos+distance*j <= numP) RGBBulletCont (pos+distance*j, r,g,b,span,dir);
+    	if (pos-distance*j > -span) RGBBulletCont (pos-distance*j, r,g,b,span,dir);
+		}
+    if (time){delay(time);}
+    if (dir < 0) {pos--;}
+    else {pos++;}
+  }
+  _strip->clear();
+}
+
+
+//bullet -- generate a band of light that moves from one end of the strip to the other using RGB color
+void AddressableStrip::multiBullet(String color, float span, int time, int dir, int num)
+{
+  int r,g,b;
+  color2RGB(color,r,g,b);
+  multiBulletRGB(r,g,b,span,time,dir, num);
+}
+
+//bulletRGB -- generate a band of light that moves from one end of the strip to the other using RGB color
+void AddressableStrip::multiBulletRGB(int r, int g, int b, int span, int time, int dir, int num)
+{
+  multiBullet2RGB(r,g,b,r,g,b,span, time, dir, num);
+}
+
+//bullet2Color -- generate a band of light that move from one end of the strip to the other that starts at one named color and ends at another named color
+void AddressableStrip::multiBullet2Color(String color1, String color2, float span, int time, int dir, int num)
+{
+  int r1,g1,b1;
+  int r2,g2,b2;
+  color2RGB(color1, r1, g1, b1);
+  color2RGB(color2, r2, g2, b2);
+  multiBullet2RGB(r1, g1, b1, r2, g2, b2, span, time, dir, num);
 }
 
 //Matrix2RGB -- generate randomly N bands of light that move from one end of the strip to the other that starts at one RGB color and ends at another RGB color
