@@ -865,6 +865,42 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
   _strip->clear();
 }
 
+void AddressableStrip::bulletFromPoint2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int start_pos) {
+  int pos=0;
+  int numP = _strip->numPixels();
+  //color step size
+  float rcs = abs(r1-r2)/(numP);
+  if (r2 > r1){rcs=rcs*-1;}
+  float gcs = abs(g1-g2)/(numP);
+  if (g2 > g1){gcs=gcs*-1;}
+  float bcs = abs(b1-b2)/(numP);
+  if (b2 > b1){bcs=bcs*-1;}
+  int limit = abs(numP-start_pos);
+	if (limit < numP/2) limit = numP-limit;
+  for (int i = 0; i < limit+span*2; i++) {
+		_pinState->update();
+    float r = r1;
+    float g = g1;
+    float b = b1;
+    if (i > span) {
+      r = r1-(rcs*(i-span));
+      g = g1-(gcs*(i-span));
+      b = b1-(bcs*(i-span)); 
+    }
+    RGBBullet (start_pos+pos, r,g,b,span,-1);
+    RGBBullet (start_pos-pos, r,g,b,span,1);
+    if (time){delay(time);}
+    // Rather than being sneaky and erasing just the tail pixel,
+    // it's easier to erase it all and draw a new one next time.
+    for(int j=-span; j<= span; j++) 
+    {
+      _strip->setPixelColor(start_pos+pos+j, 0,0,0);
+      _strip->setPixelColor(start_pos-pos-j, 0,0,0);
+    }
+    pos++;
+  }
+  _strip->clear();
+}
 //bullet -- generate a band of light that moves from one end of the strip to the other using RGB color
 void AddressableStrip::bullet(String color, float span, int time, int dir)
 {
@@ -889,7 +925,26 @@ void AddressableStrip::bullet2Color(String color1, String color2, float span, in
   bullet2RGB(r1, g1, b1, r2, g2, b2, span, time, dir);
 }
 
+void AddressableStrip::bulletFromPoint(String color, float span, int time, int start_pos)
+{
+	int r,g,b;
+	color2RGB(color, r, g, b);
+	bulletFromPointRGB(r,g,b,span,time,start_pos);
+}
 
+void AddressableStrip::bulletFromPointRGB(int r, int g, int b, int span, int time, int start_pos)
+{
+	bulletFromPoint2RGB(r,g,b,r,g,b,span,time,start_pos);
+}
+
+void AddressableStrip::bulletFromPoint2Color(String color1, String color2, float span, int time, int start_pos)
+{
+	int r1,g1,b1;
+	int r2,g2,b2;
+	color2RGB(color1, r1, g1, b1);
+	color2RGB(color2, r2, g2, b2);
+	bulletFromPoint2RGB(r1, g1, b1, r2, g2, b2, span, time, start_pos);
+}
 
 //multiBullet2RGB -- generate multiple bands of light that move from one end of the strip to the other that starts at one RGB color and ends at another RGB color
 void AddressableStrip::multiBullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir, int num) {
