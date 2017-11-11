@@ -750,6 +750,10 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
     if (g >255 ) {g=255;}
     if (b >255 ) {b=255;}
   double s = 100/span;
+	//for (int i=0; i<=span; i++) {
+		//if (dir>=0) _strip->setPixelColor(pos+i-1, 0, 0, 0);
+		//else _strip->setPixelColor(pos-i+1, 0, 0, 0);
+	//}
   for(int i=0; i<=span; i++) {
     double V = (i*s/100);
     V = sqrt(V);
@@ -762,34 +766,23 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
     if (r1 >255 ) {r1=255;}
     if (g1 >255 ) {g1=255;}
     if (b1 >255 ) {b1=255;}
-	  if (dir >= 0) 
-		 {  
-		  if (pos+i > -121) 
-			 {
-			  if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
-			 }
-		  if (pos+i >=span)
-			 {
-			 _strip->setPixelColor(pos+i+1, 0,0,0);
-			} 
-		 }
-	  else
-		 {
-		  if (pos-i > -1) 
-			 {
-			  if ((pos-i >= 0) && (pos-i < numP)){_strip->setPixelColor(pos-i, r1, g1, b1);}
+		int draw_color = 0;
+		if (r1 > 10 || g1 > 10 || b1 > 10) {draw_color=1;}  //if all vals are less than 10, color really can't be seen.
+		if (draw_color) {
+	  	if (dir <= 0) {  
+				if ((pos+i >= 0) && (pos+i < numP)){_strip->setPixelColor(pos+i, r1, g1, b1);}
 			}
-		 if (pos+i >=span)
-			{
-			 _strip->setPixelColor(pos-i-1, 0,0,0);
+	 		else {
+		  	if (pos-i >=0) {
+					_strip->setPixelColor(pos-i, r1, g1, b1);
+				}
 			}
 		}
-	
   }
   _strip->show();
 }
 
-//RGBBullet -- draw a band of width 1xspan on the LED strip at position pos of a given span with an RGB color.  Front of band (at pos) is brightest and fades to end.
+//RGBBulletCont -- draw a band of width 1xspan on the LED strip at position pos of a given span with an RGB color.  Front of band (at pos) is brightest and fades to end.
 void AddressableStrip::RGBBulletCont(int pos, int r, int g, int b, int span, int dir) {
 	int numP = _strip->numPixels();
     if (r <0 ) {r=0;}
@@ -882,21 +875,32 @@ void AddressableStrip::bulletFromPoint2RGB(float r1, float g1, float b1, float r
     float r = r1;
     float g = g1;
     float b = b1;
+		int bullet_span = pos+1;
+		if (bullet_span > span) {bullet_span = span;}
     if (i > span) {
       r = r1-(rcs*(i-span));
       g = g1-(gcs*(i-span));
       b = b1-(bcs*(i-span)); 
     }
-    RGBBullet (start_pos+pos, r,g,b,span,-1);
-    RGBBullet (start_pos-pos, r,g,b,span,1);
-    if (time){delay(time);}
     // Rather than being sneaky and erasing just the tail pixel,
     // it's easier to erase it all and draw a new one next time.
-    for(int j=-span; j<= span; j++) 
-    {
-      _strip->setPixelColor(start_pos+pos+j, 0,0,0);
-      _strip->setPixelColor(start_pos-pos-j, 0,0,0);
-    }
+		
+		if (bullet_span == span && pos > span) {
+			Serial.print (start_pos+pos-bullet_span-1);
+			Serial.print (" ");
+			Serial.println(start_pos-pos+bullet_span);
+    	_strip->setPixelColor(start_pos+pos-bullet_span-1, 1,1,1);
+    	_strip->setPixelColor(start_pos-pos+bullet_span, 1,1,1);
+		}
+		//if (pos == 0) {
+		//		_strip->setPixelColor(start_pos,r,g,b); 
+  	//		_strip->show();
+		//}
+		//else {
+    	RGBBullet (start_pos+pos, r,g,b,bullet_span,1);
+    	RGBBullet (start_pos-1-pos, r,g,b,bullet_span,-1);
+		//}
+		if (time){delay(time);}
     pos++;
   }
   _strip->clear();
@@ -978,6 +982,7 @@ void AddressableStrip::multiBullet2RGB(float r1, float g1, float b1, float r2, f
     if (time){delay(time);}
     if (dir < 0) {pos--;}
     else {pos++;}
+		delay(time);
   }
   _strip->clear();
 }
@@ -1115,17 +1120,21 @@ void AddressableStrip::Matrix2Color(String color1, String color2, float span, in
 	Matrix2RGB(r1, g1, b1, r2, g2, b2, span, time, dir);
 }
 
-void AddressableStrip::sparkle(String color, int speed) {
+void AddressableStrip::sparkle(String color, int density, int speed) {
 	int r = 0;
 	int g = 0;
 	int b = 0;
 	color2RGB(color, r, g, b);
-	sparkleRGB(r, g, b, speed);
+	sparkleRGB(r, g, b, density, speed);
+}
+
+void AddressableStrip::sparkle(String color, int speed) {
+  sparkle(color, speed, speed);
 }
 	
-void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
+void AddressableStrip::sparkleRGB(int r, int g, int b, int density, int speed) {
   for(int x=0; x<_numLEDs; x++) {
-		if (random(speed)==0) _strip->setPixelColor(x, r, g, b);
+		if (random(density)==0) _strip->setPixelColor(x, r, g, b);
 		else {
 			uint32_t color = _strip->getPixelColor(x);
 			uint8_t red = ((color>>16) & 255)*0.88;
@@ -1135,7 +1144,12 @@ void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
 		}
 		//_strip->setPixelColor(x,(_strip->getPixelColor(x)*0.88));
 	}
+	delay(speed);
 	_strip->show();
+}
+
+void AddressableStrip::sparkleRGB(int r, int g, int b, int speed) {
+	sparkleRGB(r, g, b, speed, speed);
 }
 
 void AddressableStrip::marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir) {
