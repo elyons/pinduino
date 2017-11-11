@@ -127,8 +127,10 @@ class AddressableStrip
 	  void RGBMatrix(int rows, int r, int g, int b, int span, int dir);
     void Matrix2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir);
     void Matrix2Color(String color1, String color2, float span, int time, int dir);
+		void sparkle (String color, int density, int speed);
 		void sparkle (String color, int speed);
 		void sparkleRGB (int r, int g, int b, int speed);
+		void sparkleRGB (int r, int g, int b, int density, int speed);
 		void marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir);
 
   private:
