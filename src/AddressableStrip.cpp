@@ -886,9 +886,6 @@ void AddressableStrip::bulletFromPoint2RGB(float r1, float g1, float b1, float r
     // it's easier to erase it all and draw a new one next time.
 		
 		if (bullet_span == span && pos > span) {
-			Serial.print (start_pos+pos-bullet_span-1);
-			Serial.print (" ");
-			Serial.println(start_pos-pos+bullet_span);
     	_strip->setPixelColor(start_pos+pos-bullet_span-1, 1,1,1);
     	_strip->setPixelColor(start_pos-pos+bullet_span, 1,1,1);
 		}
