@@ -886,8 +886,8 @@ void AddressableStrip::bulletFromPoint2RGB(float r1, float g1, float b1, float r
     // it's easier to erase it all and draw a new one next time.
 		
 		if (bullet_span == span && pos > span) {
-    	_strip->setPixelColor(start_pos+pos-bullet_span-1, 1,1,1);
-    	_strip->setPixelColor(start_pos-pos+bullet_span, 1,1,1);
+    	_strip->setPixelColor(start_pos+pos-bullet_span-1, 0,0,0);
+    	_strip->setPixelColor(start_pos-pos+bullet_span, 0,0,0);
 		}
 		//if (pos == 0) {
 		//		_strip->setPixelColor(start_pos,r,g,b); 
