@@ -56,7 +56,8 @@ int pinduinoPins::any()
 {
 	for (int i = 0; i < _numPins; i = i + 1)
 	{
-		if (_pinStates[i] and !i==15){return 1;}//skipping J7-10 due to noise in some systems
+		//if (_pinStates[i] and !i==15){return 1;}//skipping J7-10 due to noise in some systems
+		if (_pinStates[i]){return 1;}
 	}
 	return 0;
 }
