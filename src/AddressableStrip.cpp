@@ -349,7 +349,6 @@ void AddressableStrip::chase2RGB(float r1, float g1, float b1, float r2, float g
   if (b2 > b1){bcs=bcs*-1;}
 
   for (int i = 0; i < span; i++) {
-  	_pinState->update();
   	RGBBand (pos, r1,g1,b1,span);
   	if (time) {delay(time);}
   	for(int j=-span; j<= span; j++) {
@@ -755,6 +754,7 @@ void AddressableStrip::RGBBullet(int pos, int r, int g, int b, int span, int dir
 		//else _strip->setPixelColor(pos-i+1, 0, 0, 0);
 	//}
   for(int i=0; i<=span; i++) {
+		//_pinState->update();
     double V = (i*s/100);
     V = sqrt(V);
     int r1 = r-V*r;
@@ -824,7 +824,7 @@ void AddressableStrip::RGBBulletCont(int pos, int r, int g, int b, int span, int
 void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir) {
   int pos;
   int numP = _strip->numPixels();
-  if (dir > 0) { pos=numP+span;} 
+  if (dir < 0) { pos=numP+span;} 
   else  { pos=0-span;} 
   //color step size
   float rcs = abs(r1-r2)/(numP);
@@ -836,6 +836,13 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
   
   for (int i = 0; i < numP+span*2; i++) {
 		_pinState->update();
+    // Rather than being sneaky and erasing just the tail pixel,
+    // it's easier to erase it all and draw a new one next time.
+    for(int j=-span; j<= span; j++) 
+    {
+      _strip->setPixelColor(pos+j, 0,0,0);
+			//_pinState->update();
+    }
     float r = r1;
     float g = g1;
     float b = b1;
@@ -846,13 +853,7 @@ void AddressableStrip::bullet2RGB(float r1, float g1, float b1, float r2, float 
     }
     RGBBullet (pos, r,g,b,span,dir);
     if (time){delay(time);}
-    // Rather than being sneaky and erasing just the tail pixel,
-    // it's easier to erase it all and draw a new one next time.
-    for(int j=-span; j<= span; j++) 
-    {
-      _strip->setPixelColor(pos+j, 0,0,0);
-    }
-    if (dir > 0) {pos--;}
+    if (dir < 0) {pos--;}
     else {pos++;}
   }
   _strip->clear();
