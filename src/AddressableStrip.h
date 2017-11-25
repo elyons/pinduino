@@ -132,6 +132,8 @@ class AddressableStrip
 		void sparkleRGB (int r, int g, int b, int speed);
 		void sparkleRGB (int r, int g, int b, int density, int speed);
 		void marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir);
+		void dataStreamRGB(int r, int g, int b, int density, int speed, int dir);
+		void dataStream(String color, int density, int speed, int dir);
 
   private:
     int _pin; //data pin 
