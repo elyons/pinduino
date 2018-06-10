@@ -99,7 +99,7 @@ void AddressableStrip::color2RGB(String color, int &r, int &g, int &b)
   else if (color.equalsIgnoreCase("orange"))
   {
     r=255;
-    g=128;
+    g=50;
     b=0;
   }
   else if (color.equalsIgnoreCase("lime"))
