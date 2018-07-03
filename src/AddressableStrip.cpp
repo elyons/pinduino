@@ -1209,21 +1209,25 @@ void AddressableStrip::dataStream(String color, int density, int speed, int dir)
 void AddressableStrip::dataStreamRGBNoTail(int r, int g, int b, int density, int speed, int dir) {
         //forward direction -- must do math from end to front of strip
         if (dir > 0) {
-                if (random (density) == 0) _strip->setPixelColor(1, r, g, b);
-                for(int x=0; x<_numLEDs; x++) {
-                        uint32_t color = _strip->getPixelColor(_numLEDs-x);
-			if (color) {
-				_strip->setPixelColor(_numLEDs-x+1, r, g, b);
-				_strip->setPixelColor(_numLEDs-x, 0, 0, 0);
+                if (random (density) == 0) _strip->setPixelColor(0, r, g, b);
+		else {
+                	for(int x=0; x<=_numLEDs; x++) {
+                        	uint32_t color = _strip->getPixelColor(_numLEDs-x);
+				if (color) {
+					_strip->setPixelColor(_numLEDs-x+1, r, g, b);
+					_strip->setPixelColor(_numLEDs-x, 0, 0, 0);
+				}
 			}
                 }
         } else {
                 if (random (density) == 0) _strip->setPixelColor(_numLEDs-1, r, g, b);
-                for(int x=0; x<_numLEDs; x++) {
-                        uint32_t color = _strip->getPixelColor(x);
-                        if (color) {
-				_strip->setPixelColor(x-1, r, g, b);
-				_strip->setPixelColor(x, 0, 0, 0);
+		else {
+                	for(int x=0; x<_numLEDs; x++) {
+                        	uint32_t color = _strip->getPixelColor(x);
+                        	if (color) {
+					_strip->setPixelColor(x-1, r, g, b);
+					_strip->setPixelColor(x, 0, 0, 0);
+				}
 			}
                 }
 
