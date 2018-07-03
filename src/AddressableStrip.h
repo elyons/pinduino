@@ -136,6 +136,8 @@ class AddressableStrip
     void dataStream(String color, int density, int speed, int dir);
     void dataStreamNoTailRGB(int r, int g, int b, int density, int speed, int dir);
     void dataStreamNoTail(String color, int density, int speed, int dir);
+    void dataStreamNoTail2RGB(float r1, float g1, float b1, float r2, float g2, float b2, int density, int speed, int dir);
+    void dataStreamNoTail2Color(String color1, String color2, int density, int speed, int dir);
 
   private:
     int _pin; //data pin 
