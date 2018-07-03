@@ -1244,3 +1244,58 @@ void AddressableStrip::dataStreamNoTail(String color, int density, int speed, in
 	dataStreamNoTailRGB(r, g, b, density, speed, dir);
 }
 
+void AddressableStrip::dataStreamNoTail2RGB(float r1, float g1, float b1, float r2, float g2, float b2, int density, int speed, int dir) {
+	//calcuate color changes
+        float rcs = abs(r1-r2)/(_numLEDs);
+        if (r2 > r1){rcs=rcs*-1;}
+        float gcs = abs(g1-g2)/(_numLEDs);
+        if (g2 > g1){gcs=gcs*-1;}
+        float bcs = abs(b1-b2)/(_numLEDs);
+        if (b2 > b1){bcs=bcs*-1;}
+        //forward direction -- must do math from end to front of strip
+        if (dir > 0) {
+                if (random (density) == 0) _strip->setPixelColor(0, r1, g1, b1);
+                else {
+                        for(int x=0; x<=_numLEDs; x++) {
+                                uint32_t color = _strip->getPixelColor(_numLEDs-x);
+                                float r = r1-(rcs*(_numLEDs-x+1));
+    				float g = g1-(gcs*(_numLEDs-x+1));
+          			float b = b1-(bcs*(_numLEDs-x+1));
+				if (color) {
+                                        _strip->setPixelColor(_numLEDs-x+1, r, g, b);
+                                        _strip->setPixelColor(_numLEDs-x, 0, 0, 0);
+                                }
+                        }
+                }
+        } else {
+                if (random (density) == 0) _strip->setPixelColor(_numLEDs-1, r1, g1, b1);
+                else {
+                        for(int x=0; x<_numLEDs; x++) {
+                                uint32_t color = _strip->getPixelColor(x);
+				float r = r1-(rcs*(_numLEDs-x+1));
+                                float g = g1-(gcs*(_numLEDs-x+1));
+                                float b = b1-(bcs*(_numLEDs-x+1));
+                                if (color) {
+                                        _strip->setPixelColor(x-1, r, g, b);
+                                        _strip->setPixelColor(x, 0, 0, 0);
+                                }
+                        }
+                }
+        
+        }
+        if (speed) {delay(speed);}
+        _strip->show();
+}
+
+
+void AddressableStrip::dataStreamNoTail2Color(String color1, String color2, int density, int speed, int dir) {
+        int r1 = 0;
+        int g1 = 0;
+        int b1 = 0;
+        color2RGB(color1, r1, g1, b1);
+        int r2 = 0;
+        int g2 = 0;
+        int b2 = 0;
+        color2RGB(color2, r2, g2, b2);
+        dataStreamNoTail2RGB(r1, g1, b1, r2, g2, b2, density, speed, dir);
+}
