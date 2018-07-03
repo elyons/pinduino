@@ -1206,7 +1206,7 @@ void AddressableStrip::dataStream(String color, int density, int speed, int dir)
         dataStreamRGB(r, g, b, density, speed, dir);
 }
 
-void AddressableStrip::dataStreamRGBNoTail(int r, int g, int b, int density, int speed, int dir) {
+void AddressableStrip::dataStreamNoTailRGB(int r, int g, int b, int density, int speed, int dir) {
         //forward direction -- must do math from end to front of strip
         if (dir > 0) {
                 if (random (density) == 0) _strip->setPixelColor(0, r, g, b);
@@ -1241,5 +1241,6 @@ void AddressableStrip::dataStreamNoTail(String color, int density, int speed, in
 	int g = 0;
 	int b = 0;
 	color2RGB(color, r, g, b);
-	dataStreamRGBNoTail(r, g, b, density, speed, dir);
+	dataStreamNoTailRGB(r, g, b, density, speed, dir);
 }
+
