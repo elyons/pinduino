@@ -214,4 +214,39 @@ Example: pd.adrLED1()->explosion(255, 0, 0, 5);
 void explosion(int pos, String color, int span);
 Example: pd.adrLED1()->explosion(20, "red", 5);
 Means:  Do explosion effect for LED strip 1 at position 10th LED, color red, span (size of explosion) 5 LEDs
+
+
+void chase2RGBCont(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir, int startLED, int endLED);
+void chase2ColorCont(String Color1, String Color2, float span, int time, int dir, int startLED, int endLED);
+void chaseColorCont(String color, float span, int time, int dir, int startLED, int endLED);
+void RGBBandCont(int pos, int r, int g, int b, int span, int startLED, int endLED);
+void RGBBullet(int pos, int r, int g, int b, int span, int dir);
+void RGBBulletCont(int pos, int r, int g, int b, int span, int dir);
+void bullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir);
+void bullet2Color(String color1, String color2, float span, int time, int dir);
+void bulletRGB(int r, int g, int b, int span, int time, int dir);
+void bullet(String color, float span, int time, int dir);
+void bulletFromPoint2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int start_pos);
+void bulletFromPoint2Color(String color1, String color2, float span, int time, int start_pos);
+void bulletFromPointRGB(int r, int g, int b, int span, int time, int start_pos);
+void bulletFromPoint(String color, float span, int time, int start_pos);
+	  void multiBullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir, int num);
+void multiBullet2Color(String color1, String color2, float span, int time, int dir, int num);
+void multiBulletRGB(int r, int g, int b, int span, int time, int dir, int num);
+void multiBullet(String color, float span, int time, int dir, int num);
+void RGBMatrix(int rows, int r, int g, int b, int span, int dir);
+void Matrix2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir);
+void Matrix2Color(String color1, String color2, float span, int time, int dir);
+void sparkle (String color, int density, int speed);
+void sparkle (String color, int speed);
+void sparkleRGB (int r, int g, int b, int speed);
+void sparkleRGB (int r, int g, int b, int density, int speed);
+void marqueeRGB (int r, int g, int b, int span, int dist, int speed, int dir);
+void dataStreamRGB(int r, int g, int b, int density, int speed, int dir);
+void dataStream(String color, int density, int speed, int dir);
+void dataStreamNoTailRGB(int r, int g, int b, int density, int speed, int dir);
+void dataStreamNoTail(String color, int density, int speed, int dir);
+void dataStreamNoTail2RGB(float r1, float g1, float b1, float r2, float g2, float b2, int density, int speed, int dir);
+void dataStreamNoTail2Color(String color1, String color2, int density, int speed, int dir);
+
 ```
