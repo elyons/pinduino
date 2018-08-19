@@ -1331,7 +1331,6 @@ void AddressableStrip::equalizerRGB(float r1, float g1, float b1, float r2, floa
         //set color bar pixels
         strip()->setPixelColor(i-1, r,g,b);
       }
-      strip()->setPixelColor(span, r2,g2,b2);
     }
     else {//direction is at the end of the strip
       strip()->setPixelColor(stripLength-i, r2,g2,b2);
