@@ -138,7 +138,8 @@ class AddressableStrip
     void dataStreamNoTail(String color, int density, int speed, int dir);
     void dataStreamNoTail2RGB(float r1, float g1, float b1, float r2, float g2, float b2, int density, int speed, int dir);
     void dataStreamNoTail2Color(String color1, String color2, int density, int speed, int dir);
-    void equalizerRGB(float r1, float g1, float b1, float r2, float g2, float b2, int span, int spd, int tipFallDelaySpan, int dir);
+    void equalizerRGB(float r1, float g1, float b1, float r2, float g2, float b2, int span, int spd, int tipFallDelaySpan, int dir, int nofade);
+    void equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir, int nofade);
     void equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir);
 
   private:

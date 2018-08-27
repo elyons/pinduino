@@ -1300,7 +1300,7 @@ void AddressableStrip::dataStreamNoTail2Color(String color1, String color2, int 
   dataStreamNoTail2RGB(r1, g1, b1, r2, g2, b2, density, speed, dir);
 }
 
-void AddressableStrip::equalizerRGB(float r1, float g1, float b1, float r2, float g2, float b2, int span, int spd, int tipFallDelaySpan, int dir){
+void AddressableStrip::equalizerRGB(float r1, float g1, float b1, float r2, float g2, float b2, int span, int spd, int tipFallDelaySpan, int dir, int nofade){
 
   int stripLength = getNumLEDs();
 
@@ -1329,14 +1329,16 @@ void AddressableStrip::equalizerRGB(float r1, float g1, float b1, float r2, floa
       strip()->setPixelColor(i, r2,g2,b2);
       if(i>0){
         //set color bar pixels
-        strip()->setPixelColor(i-1, r,g,b);
+        if (nofade) {strip()->setPixelColor(i-1, r1, g1, b1);}
+        else {strip()->setPixelColor(i-1, r,g,b);}
       }
     }
     else {//direction is at the end of the strip
       strip()->setPixelColor(stripLength-i, r2,g2,b2);
       if (i<stripLength) {
         //set color bar pixels
-        strip()->setPixelColor(stripLength-i+1,r,g,b);
+        if (nofade) {strip()->setPixelColor(i-1, r1, g1, b1);}
+        else {strip()->setPixelColor(stripLength-i+1,r,g,b);}
       }
     }
     strip()->show();
@@ -1388,10 +1390,15 @@ void AddressableStrip::equalizerRGB(float r1, float g1, float b1, float r2, floa
 }
 
 void AddressableStrip::equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir){
+  equalizer(color1, color2, span, spd, tipFallDelaySpan, dir, 0);
+}
+
+
+void AddressableStrip::equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir, int nofade){
   int r1,g1,b1;
   int r2,g2,b2;
   color2RGB(color1, r1, g1, b1);
   color2RGB(color2, r2, g2, b2);
-  equalizerRGB(r1, g1, b1, r2, g2, b2, span, spd, tipFallDelaySpan, dir);
+  equalizerRGB(r1, g1, b1, r2, g2, b2, span, spd, tipFallDelaySpan, dir, nofade);
 }
 
