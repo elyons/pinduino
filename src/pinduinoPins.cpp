@@ -56,7 +56,6 @@ int pinduinoPins::any()
 {
 	for (int i = 0; i < _numPins; i = i + 1)
 	{
-		//if (_pinStates[i] and !i==15){return 1;}//skipping J7-10 due to noise in some systems
 		if (_pinStates[i]){return 1;}
 	}
 	return 0;
@@ -193,6 +192,60 @@ void pinduinoPins::resetJ9 (int pin)
         else if (pin == 14) {  resetPin(10);}
         else if (pin == 15) {  resetPin(15);}
 }
+
+
+int pinduinoPins::P12 (int pin)
+{
+	if (pin == 1) { return get(8);}
+	else if (pin == 2) { return get(9);}
+	else if (pin == 4) { return get(10);}
+	else if (pin == 5) { return get(11);}
+	else if (pin == 6) { return get(12);}
+	else if (pin == 7) { return get(13);}
+	else if (pin == 8) { return get(14);}
+	else if (pin == 9) { return get(15);}
+	//default
+	return 0;
+}
+
+void pinduinoPins::resetP12 (int pin)
+{
+	if (pin == 1) { resetPin(8);}
+	else if (pin == 2) { resetPin(9);}
+	else if (pin == 4) { resetPin(10);}
+	else if (pin == 5) { resetPin(11);}
+	else if (pin == 6) { resetPin(12);}
+	else if (pin == 7) { resetPin(13);}
+	else if (pin == 8) { resetPin(14);}
+	else if (pin == 9) { resetPin(15);}
+}
+
+int pinduinoPins::P11 (int pin)
+{
+	if (pin == 1) { return get(0);}
+	else if (pin == 3) { return get(1);}
+	else if (pin == 4) { return get(2);}
+	else if (pin == 5) { return get(3);}
+	else if (pin == 6) { return get(4);}
+	else if (pin == 7) { return get(5);}
+	else if (pin == 8) { return get(6);}
+	else if (pin == 9) { return get(7);}
+	//default
+	return 0;
+}
+
+void pinduinoPins::resetP11 (int pin)
+{
+	if (pin == 1) { resetPin(0);}
+	else if (pin == 3) { resetPin(1);}
+	else if (pin == 4) { resetPin(2);}
+	else if (pin == 5) { resetPin(3);}
+	else if (pin == 6) { resetPin(4);}
+	else if (pin == 7) { resetPin(5);}
+	else if (pin == 8) { resetPin(6);}
+	else if (pin == 9) { resetPin(7);}
+}
+
 
 int pinduinoPins::numPins()
 {

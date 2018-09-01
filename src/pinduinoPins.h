@@ -35,6 +35,10 @@ class pinduinoPins
 		void resetJ126(int pin); // interface to retrieve pin state by WPC J126 pin 
 		int J9(int pin); // interface to retrieve pin state by Data East/Sega System 3 pin 
 		void resetJ9(int pin); // interface to retrieve pin state by Data East/Sega System 3
+		int P11(int pin); // interface to retrieve pin state by Data East/Sega System 3 pin 
+		void resetP11(int pin); // interface to retrieve pin state by Data East/Sega System 3
+		int P12(int pin); // interface to retrieve pin state by Data East/Sega System 3 pin 
+		void resetP12(int pin); // interface to retrieve pin state by Data East/Sega System 3
 		int any(); // returns true if any pinStates have non-zero values
 
   private:
