@@ -11,6 +11,7 @@
 #include <RGBStrip.h>
 #include <AddressableStrip.h>
 #include <pinduinoPins.h>
+#include <DataPort.h>
 class pinduino
 {
   protected:
@@ -41,6 +42,11 @@ class pinduino
     AddressableStrip* adrLED1();    
     AddressableStrip* adrLED2();    
     AddressableStrip* adrLED3();    
+
+    //Functions for controlling output ports 
+    DataPort* port1();
+    DataPort* port2();
+    DataPort* port3();
 
     //functions that affect multiple AddressableStrips simultaneously
     // color all strips
@@ -92,6 +98,12 @@ class pinduino
     AddressableStrip* ALED1;
     AddressableStrip* ALED2;
     AddressableStrip* ALED3;
+
+    //internal objects for control output ports (set high and low for transistor/relay control)
+    DataPort* DATAPORT1;
+    DataPort* DATAPORT2;
+    DataPort* DATAPORT3;
+
     
     void init(int aledNum1, int aledNum2, int aledNum3, String arduinoType);
 };
