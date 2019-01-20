@@ -10,6 +10,7 @@
 #include <RGBStrip.h>
 #include <AddressableStrip.h>
 #include <pinduinoPins.h>
+#include <DataPort.h>
 
 pinduino::pinduino()
 {
@@ -50,12 +51,18 @@ void pinduino::init(int aledNum1, int aledNum2, int aledNum3, String arduinoType
  		RGB2 = new RGBStrip(8,9,10); // pins 8,9,10 
  		RGB3 = new RGBStrip(5,6,7); // pins 5,6,7 
  		RGB4 = new RGBStrip(2,3,4); // pins 2,3,4 
+    DATAPORT1 = new DataPort(69);
+    DATAPORT2 = new DataPort(68);
+    DATAPORT3 = new DataPort(67);
+
 	}
 	else if (arduinoType == "Nano") 
 	{
  		ALED1 = new AddressableStrip(aledNum1, 10, _pinState);
  		ALED2 = new AddressableStrip(aledNum2, 11, _pinState);
  		ALED3 = new AddressableStrip(aledNum3, 0, _pinState);
+    DATAPORT1 = new DataPort(10);
+    DATAPORT2 = new DataPort(11);
 	}
 	else
 	{
@@ -110,6 +117,21 @@ AddressableStrip* pinduino::adrLED2 ()
 AddressableStrip* pinduino::adrLED3 ()
 {
  return ALED3;
+}
+
+DataPort* pinduino::port1 ()
+{
+ return DATAPORT1;
+}
+
+DataPort* pinduino::port2 ()
+{
+ return DATAPORT2;
+}
+
+DataPort* pinduino::port3 ()
+{
+ return DATAPORT3;
 }
 
 //fade out all addressable strips
@@ -228,20 +250,6 @@ void pinduino::chaseAllAdr2RGB (float r1, float g1, float b1, float r2, float g2
 	float bcs = abs(b1-b2)/(numP);
 	if (b2 > b1){bcs=bcs*-1;}
 	
-	//for (int i = 0; i < span; i++) {
-	//  	_pinState->update();
-	//  	if (pos < ALED1->strip()->numPixels()+span+1) {ALED1->RGBBand(pos, r1, g1, b1, span);}
-	//  	if (pos < ALED2->strip()->numPixels()+span+1) {ALED2->RGBBand(pos, r1, g1, b1, span);}
-	  	//if (pos < ALED3->strip()->numPixels()+span+1) {ALED3->RGBBand(pos, r1, g1, b1, span);}
-	//  	if (time){delay(time);}
-	//  	for(int j=-span; j<= span; j++) {
-	//  		if (pos < ALED1->strip()->numPixels()+span) {ALED1->strip()->setPixelColor(pos+j, 0,0,0);}
-	//  		if (pos < ALED2->strip()->numPixels()+span) {ALED2->strip()->setPixelColor(pos+j, 0,0,0);}
-	  		//if (pos < ALED3->strip()->numPixels()+span) {ALED3->strip()->setPixelColor(pos+j, 0,0,0);}
-	 // 	}  
-	 //   if (dir > 0) {pos--;}
-	 //   else {pos++;}
-	//}
 	for (int i = 0; i < numP+2*span+1; i++) {
 		_pinState->update();
 		float r = r1;
@@ -264,20 +272,6 @@ void pinduino::chaseAllAdr2RGB (float r1, float g1, float b1, float r2, float g2
 		if (dir > 0) {pos--;}
 		else{pos++;}
 	}
-	//for (int i = 0; i < span; i++) {
-		//_pinState->update();
-		//if (pos < ALED1->strip()->numPixels()+span+1) {ALED1->RGBBand(pos, r2, g2, b2, span);}
-		//if (pos < ALED2->strip()->numPixels()+span+1) {ALED2->RGBBand(pos, r2, g2, b2, span);}
-		//if (pos < ALED3->strip()->numPixels()+span+1) {ALED3->RGBBand(pos, r2, g2, b2, span);}
-		//if (time){delay(time);}
-		//for(int j=-span; j<= span; j++) {
-			//if (pos < ALED1->strip()->numPixels()+span) {ALED1->strip()->setPixelColor(pos+j, 0,0,0);}
-			//if (pos < ALED2->strip()->numPixels()+span) {ALED2->strip()->setPixelColor(pos+j, 0,0,0);}
-			//if (pos < ALED3->strip()->numPixels()+span) {ALED3->strip()->setPixelColor(pos+j, 0,0,0);}
-		//}  
-		//if (dir > 0) {pos--;}
-		//else {pos++;}
-	//}
 }
 
 void pinduino::chaseAllAdr2Color (String color1, String color2, float span, int time, int dir){
@@ -327,14 +321,6 @@ void pinduino::chaseAllAdr2RGBFromPoint(int pos, float r1, float g1, float b1, f
 	}
 	for (int i = 0; i < span; i++) {
 		_pinState->update();
-//		if (ALED1->strip()->numPixels() > 0) {ALED1->RGBBand(pos-max_pos-i, r2, g2, b2, span); ALED1->RGBBand(pos+max_pos+i, r2, g2, b2, span);}
-//		if (ALED2->strip()->numPixels() > 0) {ALED2->RGBBand(pos-max_pos-i, r2, g2, b2, span); ALED2->RGBBand(pos+max_pos+i, r2, g2, b2, span);}
-		//if (ALED3->strip()->numPixels() > 0) {ALED3->RGBBand(pos-max_pos-i, r2, g2, b2, span); ALED2->RGBBand(pos+max_pos+i, r2, g2, b2, span);}
-//		for(int j=-span; j<= span; j++) {
-//				if (ALED1->strip()->numPixels() > 0) {ALED1->strip()->setPixelColor(pos-max_pos-i+j, 0,0,0); ALED1->strip()->setPixelColor(pos+max_pos+i+j, 0,0,0);}
-//				if (ALED2->strip()->numPixels() > 0) {ALED2->strip()->setPixelColor(pos-max_pos-i+j, 0,0,0); ALED2->strip()->setPixelColor(pos+max_pos+i+j, 0,0,0);}
-				//if (ALED3->strip()->numPixels() > 0) {ALED3->strip()->setPixelColor(pos-max_pos-i+j, 0,0,0); ALED3->strip()->setPixelColor(pos+max_pos+i+j, 0,0,0);}
-//		}   
 	}	
 }
 
