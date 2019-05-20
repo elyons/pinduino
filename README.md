@@ -250,3 +250,10 @@ void dataStreamNoTail2RGB(float r1, float g1, float b1, float r2, float g2, floa
 void dataStreamNoTail2Color(String color1, String color2, int density, int speed, int dir);
 
 ```
+#function to control relays and tranistors
+The pinduino can be used to control a relay or transistor through one of the LED ports.  The center channel can be set hi/low (rather than being used to send data to addressable LEDs).  A common use case for doing this would be to turn on/off a shaker motor.  Since shaker motors run at 12V, a relay or transistor is needed to isolate the power to the motor from the controlling circit from the pinduino.  To use the output ports of a pinduino for this case:
+```
+pd.port1()->high();
+delay(75); 
+pd.port1()->low();
+```
