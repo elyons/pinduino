@@ -30,9 +30,13 @@ class AddressableStrip
     Adafruit_NeoPixel* strip();
 
     //functions for controlling 5V Addressable RGB strips
-    void color2RGB(String color, int &r, int &g, int &b);
-    //color the entire strip some color
     //valid colors are (case insensitive):  red, green, blue, yellow, cyan, purple, white, orange, lime, sky, mint, magenta, lavender
+    void color2RGB(String color, int &r, int &g, int &b);
+
+		//return a random valid color
+		String randomColor();
+    
+    //color the entire strip some color
     void color(String color, int brightness);
     void color(String color);
     //If you want to specify by R, G, B values between 0-255
@@ -109,13 +113,28 @@ class AddressableStrip
     void chase2ColorCont(String Color1, String Color2, float span, int time, int dir, int startLED, int endLED);
     void chaseColorCont(String color, float span, int time, int dir, int startLED, int endLED);
     void RGBBandCont(int pos, int r, int g, int b, int span, int startLED, int endLED);
-
+    
+    //bullet and overloaded constructors for bullet lighting functions
+		//RGBBullet is the routine that draws the bullet.  The other routines specify where the bullet is drawn, its colors, and how it moves
     void RGBBullet(int pos, int r, int g, int b, int span, int dir);
     void RGBBulletCont(int pos, int r, int g, int b, int span, int dir);
+
+    void bullet(String color, float span, int time, int dir);
+    void bullet(String color1, String color2, float span, int time, int dir);
+    void bullet(int r, int g, int b, float span, int time, int dir);
+    void bullet(int r1, int g1, int b1, int r2, int g2, int b2, float span, int time, int dir);
+    void bullet(String color, float span, int time, int dir, int start, int stop);
+    void bullet(String color1, String color2, float span, int time, int dir, int start, int stop);
+    void bullet(int r, int g, int b, float span, int time, int dir, int start, int stop);
+    void bullet(int r1, int g1, int b1, int r2, int g2, int b2, float span, int time, int dir, int start, int stop);
+   
     void bullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir);
+    void bullet2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int dir, int start, int stop);
+    void bullet2Color(String color1, String color2, float span, int time, int dir, int start, int stop);
     void bullet2Color(String color1, String color2, float span, int time, int dir);
     void bulletRGB(int r, int g, int b, int span, int time, int dir);
-    void bullet(String color, float span, int time, int dir);
+    void bulletRGB(int r, int g, int b, int span, int time, int dir, int start, int stop);
+
     void bulletFromPoint2RGB(float r1, float g1, float b1, float r2, float g2, float b2, float span, int time, int start_pos);
     void bulletFromPoint2Color(String color1, String color2, float span, int time, int start_pos);
     void bulletFromPointRGB(int r, int g, int b, int span, int time, int start_pos);
