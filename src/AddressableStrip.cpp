@@ -197,6 +197,10 @@ void AddressableStrip::color(String color)
 	colorRGB(r, g, b); 
 }
 
+void AddressableStrip::color(int r, int g, int b) {
+    colorRGB(r,g,b);
+}
+
 //fade in strip to a named color
 void AddressableStrip::fadeIn(String color, float time)
 {
