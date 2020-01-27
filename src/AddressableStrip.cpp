@@ -90,6 +90,12 @@ void AddressableStrip::color2RGB(String color, int &r, int &g, int &b)
 		b=255;
 		g=255;
 	}
+    else if (color.equalsIgnoreCase("iceblue"))
+    {
+        r=13;
+        g=185;
+        b=199;
+    }
 	else if (color.equalsIgnoreCase("white"))
 	{
 		r=255;
