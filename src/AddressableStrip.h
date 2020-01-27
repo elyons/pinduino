@@ -39,6 +39,8 @@ class AddressableStrip
     //color the entire strip some color
     void color(String color, int brightness);
     void color(String color);
+    void color(int r, int g, int b);
+    
     //If you want to specify by R, G, B values between 0-255
     void colorRGB(int r, int g, int b, int brightness);
     void colorRGB(int r, int g, int b);
