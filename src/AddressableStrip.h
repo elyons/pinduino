@@ -20,6 +20,7 @@ class AddressableStrip
 
     void setNumLEDs(int num);
     int getNumLEDs();
+    int getDataPin();
     AddressableStrip* next();
     void setNext(AddressableStrip* strip);
     AddressableStrip* previous();
@@ -165,6 +166,8 @@ class AddressableStrip
     void equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir, int nofade);
     void equalizer(String color1, String color2, int span, int spd, int tipFallDelaySpan, int dir);
 		void fire(int density, int speed);
+    void meteorRain(int r, int g, int b, int meteorSize, int meteorTrailDecay, boolean meteorRandomDecan, int SpeedDelay);
+    void fadeToBlack(int ledNo, byte fadeValue);
 
   private:
     int _pin; //data pin 
