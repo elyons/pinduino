@@ -25,6 +25,11 @@ int AddressableStrip::getNumLEDs()
 	return _numLEDs;
 }
 
+int AddressableStrip::getDataPin()
+{
+	return _pin;
+}
+
 AddressableStrip* AddressableStrip::next()
 {
 	return _next;
@@ -1539,5 +1544,42 @@ void AddressableStrip::fire(int density, int speed) {
 	}
 	delay(speed);
 	_strip->show();
+}
+
+void AddressableStrip::meteorRain(int r, int g, int b, int meteorSize, int meteorTrailDecay, boolean meteorRandomDecay, int SpeedDelay) {  
+  for(int i = 0; i < _numLEDs+meteorSize; i++) {
+    // fade brightness all LEDs one step
+    for(int j=0; j<_numLEDs; j++) {
+      if( (!meteorRandomDecay) || (random(10)>5) ) {
+        fadeToBlack(j, meteorTrailDecay );        
+      }
+    }
+   
+    // draw meteor
+    for(int j = 0; j < meteorSize; j++) {
+      if( ( i-j <_numLEDs) && (i-j>=0) ) {
+        _strip->setPixelColor(i-j, r, g, b);
+      }
+    }  
+    _strip->show();
+    delay(SpeedDelay);
+  }
+}
+
+void AddressableStrip::fadeToBlack(int ledNo, byte fadeValue) {
+  uint32_t oldColor;
+  uint8_t r, g, b;
+  int value;
+  if (fadeValue<25) { fadeValue = 25;} 
+  oldColor = _strip->getPixelColor(ledNo);
+  r = (oldColor & 0x00ff0000UL) >> 16;
+  g = (oldColor & 0x0000ff00UL) >> 8;
+  b = (oldColor & 0x000000ffUL);
+
+  r=(r<=10)? 0 : (int) r-(r*fadeValue/256);
+  g=(g<=10)? 0 : (int) g-(g*fadeValue/256);
+  b=(b<=10)? 0 : (int) b-(b*fadeValue/256);
+   
+  _strip->setPixelColor(ledNo, r,g,b);
 }
 
