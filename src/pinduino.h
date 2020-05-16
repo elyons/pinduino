@@ -10,6 +10,7 @@
 #include <Arduino.h>
 #include <RGBStrip.h>
 #include <AddressableStrip.h>
+#include <AddressableMatrix.h>
 #include <pinduinoPins.h>
 #include <DataPort.h>
 class pinduino
@@ -42,6 +43,9 @@ class pinduino
     AddressableStrip* adrLED1();    
     AddressableStrip* adrLED2();    
     AddressableStrip* adrLED3();    
+
+    //functions for creating 5V Addressable LED matrices
+    AddressableMatrix* adrMatrix(AddressableStrip* adr, int col, int row, int start);    
 
     //Functions for controlling output ports 
     DataPort* port1();
@@ -94,7 +98,7 @@ class pinduino
     RGBStrip* RGB3;
     RGBStrip* RGB4;
 
-		//internal objects for AssressableStrip control
+		//internal objects for AddressableStrip control
     AddressableStrip* ALED1;
     AddressableStrip* ALED2;
     AddressableStrip* ALED3;

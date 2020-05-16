@@ -9,6 +9,7 @@
 #include <pinduino.h>
 #include <RGBStrip.h>
 #include <AddressableStrip.h>
+#include <AddressableMatrix.h>
 #include <pinduinoPins.h>
 #include <DataPort.h>
 
@@ -69,14 +70,6 @@ void pinduino::init(int aledNum1, int aledNum2, int aledNum3, String arduinoType
 		Serial.print("Unsupported Arduino board: ");
 		Serial.println(arduinoType);
 	}
-	//I think these are never used.
-	ALED1->setNext(ALED2);
-	ALED1->setPrevious(ALED3);
-	ALED2->setNext(ALED3);
-	ALED2->setPrevious(ALED1);
-	ALED3->setNext(ALED1);
-	ALED3->setPrevious(ALED2);
-
 }
 
 pinduinoPins* pinduino::pinState()
@@ -99,6 +92,7 @@ RGBStrip* pinduino::rgbLED3 ()
  return RGB3;
 }
 
+
 RGBStrip* pinduino::rgbLED4 ()
 {
  return RGB4;
@@ -117,6 +111,11 @@ AddressableStrip* pinduino::adrLED2 ()
 AddressableStrip* pinduino::adrLED3 ()
 {
  return ALED3;
+}
+
+AddressableMatrix* pinduino::adrMatrix (AddressableStrip* adr, int col, int row, int start)
+{
+  return new AddressableMatrix(adr, col, row, start); 
 }
 
 DataPort* pinduino::port1 ()
