@@ -1529,7 +1529,7 @@ void AddressableStrip::fire(int density, int speed) {
 		else if (y == 1) {color = "orange";}
 		else if (y == 2) {color = "yellow";}
 		else if (y == 3) {color = "red";}
-		else if (y == 3) {color = "orange";}
+		else if (y == 4) {color = "orange";}
 		int r,g,b;
 		color2RGB(color, r, g, b);
 		if (random(density)==0) _strip->setPixelColor(x, r, g, b);
