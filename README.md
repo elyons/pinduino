@@ -3,7 +3,7 @@
 The pinduino library is used to control LEDs (and other mods) on pinball machines using an arduino-based board called the Pinduino.  
 
 # Additional Documents
-* [Instructions on Google docs for everything -- programming, building, installing, etc] (https://drive.google.com/drive/u/0/folders/0B2njOnd06CCOdlBCVzdiWFZhUVE)
+* [Instructions on Google docs for everything -- programming, building, installing, etc] (https://drive.google.com/drive/u/0/folders/0B2njOnd06CCOdk5URVRlWk1wRFU)
 * [Pinduino sketches for various games] (https://github.com/elyons/professor_pinball_pinduino_sketches)
 * [Board files for the Pinduino] (https://github.com/elyons/professor_pinball_pinduino_sketches/tree/master/board_files)
 
