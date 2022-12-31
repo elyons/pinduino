@@ -60,7 +60,7 @@ Adafruit_NeoPixel::Adafruit_NeoPixel(uint16_t n, uint8_t p, uint8_t t) : numLEDs
 }
 
 //new functions to change LED type
-void Adafruit_NeoPixel::updateType(String t) {
+void Adafruit_NeoPixel::updateType(String type) {
  if(t == "GRB") { // GRB vs RGB; might add others if needed
     rOffset = 1;
     gOffset = 0;
