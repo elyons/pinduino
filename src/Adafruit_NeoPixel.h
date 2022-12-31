@@ -59,7 +59,7 @@ class Adafruit_NeoPixel {
     clear();
   
   //new functions to change LED type
-  void updateType(String t);
+  void updateType(String type);
   
   uint8_t
    *getPixels(void) const,
