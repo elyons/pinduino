@@ -17,7 +17,7 @@ class AddressableStrip
     //Constructor
     //initialize strip for appropriate data pin
     AddressableStrip(int num, int pin, pinduinoPins* pinState);
-    AddressableStrip(int num, int pin, pinduinoPins* pinState, String RGB_Type)
+    AddressableStrip(int num, int pin, pinduinoPins* pinState, String RGB_Type);
 
     void setNumLEDs(int num);
     int getNumLEDs();
