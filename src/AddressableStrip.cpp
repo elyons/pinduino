@@ -15,7 +15,7 @@ AddressableStrip::AddressableStrip(int num, int pin, pinduinoPins* pinState, Str
 	_pinState=pinState;
 	_pin = pin;
 	_numLEDs = num;
-	if (RGB_TYPE == "RGB")
+	if (RGB_Type == "RGB")
 	{
 		_strip = new Adafruit_NeoPixel(_numLEDs, _pin, NEO_RGB + NEO_KHZ800);
 	}
