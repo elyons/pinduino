@@ -5,12 +5,24 @@
 
 AddressableStrip::AddressableStrip(int num, int pin, pinduinoPins* pinState)
 {
+	AddressableStrip(num, pin, pinState, "GRB");
+}
+
+AddressableStrip::AddressableStrip(int num, int pin, pinduinoPins* pinState, String RGB_Type)
+{
 	//Data channel
 	pinMode(pin, OUTPUT);
 	_pinState=pinState;
 	_pin = pin;
 	_numLEDs = num;
-	_strip = new Adafruit_NeoPixel(_numLEDs, _pin, NEO_GRB + NEO_KHZ800);
+	if (RGB_TYPE == "RGB")
+	{
+		_strip = new Adafruit_NeoPixel(_numLEDs, _pin, NEO_RGB + NEO_KHZ800);
+	}
+	else
+	{
+		_strip = new Adafruit_NeoPixel(_numLEDs, _pin, NEO_GRB + NEO_KHZ800);
+	}
 	//  clear();// this is causing the Arduino to crash.  Perhaps where I have it placed in terms of order in the library?
 }
 
