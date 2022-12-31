@@ -65,7 +65,7 @@ void Adafruit_NeoPixel::updateType(String t) {
     rOffset = 1;
     gOffset = 0;
     bOffset = 2;
-  } else if ("t" = "BRG") {
+  } else if ("t" == "BRG") {
     rOffset = 1;
     gOffset = 2;
     bOffset = 0;
