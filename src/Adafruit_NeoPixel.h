@@ -57,6 +57,10 @@ class Adafruit_NeoPixel {
     setPixelColor(uint16_t n, uint32_t c),
     setBrightness(uint8_t),
     clear();
+  
+  //new functions to change LED type
+  void updateType(neoPixelType t);
+  
   uint8_t
    *getPixels(void) const,
     getBrightness(void) const;
